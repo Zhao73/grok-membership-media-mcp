@@ -33,20 +33,28 @@ function visibleCommands() {
 
 function setActiveCommand(index) {
   const items = visibleCommands();
-  if (!items.length) return;
+  if (!items.length) {
+    commandItems.forEach((item) => {
+      item.classList.remove("is-active");
+      item.setAttribute("aria-selected", "false");
+    });
+    commandInput?.removeAttribute("aria-activedescendant");
+    return;
+  }
   activeCommand = (index + items.length) % items.length;
   commandItems.forEach((item) => {
     const selected = item === items[activeCommand];
     item.classList.toggle("is-active", selected);
     item.setAttribute("aria-selected", String(selected));
   });
+  commandInput?.setAttribute("aria-activedescendant", items[activeCommand].id);
   items[activeCommand].scrollIntoView({ block: "nearest" });
 }
 
 function filterCommands() {
   const query = commandInput.value.trim().toLocaleLowerCase();
   commandItems.forEach((item) => {
-    item.hidden = Boolean(query) && !item.dataset.search.includes(query);
+    item.hidden = Boolean(query) && !item.dataset.search.toLocaleLowerCase().includes(query);
   });
   commandGroups.forEach((group) => {
     group.hidden = !group.querySelector("[data-command]:not([hidden])");
@@ -64,6 +72,7 @@ function openCommands() {
   commandInput.value = "";
   filterCommands();
   commandDialog.showModal();
+  commandTrigger?.setAttribute("aria-expanded", "true");
   document.body.dataset.dialogOpen = "true";
   window.requestAnimationFrame(() => commandInput.focus());
 }
@@ -95,6 +104,9 @@ commandInput?.addEventListener("keydown", (event) => {
   } else if (event.key === "Enter" && items.length) {
     event.preventDefault();
     items[activeCommand].click();
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeCommands();
   }
 });
 
@@ -112,10 +124,20 @@ commandDialog?.addEventListener("click", (event) => {
 
 commandDialog?.addEventListener("close", () => {
   delete document.body.dataset.dialogOpen;
+  commandTrigger?.setAttribute("aria-expanded", "false");
+  commandInput?.removeAttribute("aria-activedescendant");
   if (returnFocus instanceof HTMLElement) returnFocus.focus({ preventScroll: true });
 });
 
 const copyStatus = document.querySelector("#copy-status");
+
+function announceCopy(message) {
+  if (!copyStatus) return;
+  copyStatus.textContent = "";
+  window.requestAnimationFrame(() => {
+    copyStatus.textContent = message;
+  });
+}
 
 async function writeClipboard(value) {
   if (navigator.clipboard?.writeText) {
@@ -126,21 +148,28 @@ async function writeClipboard(value) {
       // Continue to the selection-based fallback when browser permission is unavailable.
     }
   }
+  const previousFocus = document.activeElement;
   const fallback = document.createElement("textarea");
   fallback.value = value;
   fallback.setAttribute("readonly", "");
   fallback.style.position = "fixed";
   fallback.style.opacity = "0";
   document.body.append(fallback);
-  fallback.select();
-  const copied = document.execCommand("copy");
-  fallback.remove();
+  let copied = false;
+  try {
+    fallback.select();
+    copied = document.execCommand("copy");
+  } finally {
+    fallback.remove();
+    if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
+  }
   if (!copied) throw new Error("Clipboard command was rejected");
 }
 
 function restoreCopyButton(button) {
   window.clearTimeout(Number(button.dataset.restoreTimer));
   button.textContent = button.dataset.label;
+  button.removeAttribute("aria-busy");
   delete button.dataset.state;
   delete button.dataset.restoreTimer;
 }
@@ -149,25 +178,26 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
   button.addEventListener("click", async () => {
     const source = document.getElementById(button.dataset.copyTarget);
     if (!source) return;
+    window.clearTimeout(Number(button.dataset.restoreTimer));
+    delete button.dataset.restoreTimer;
     button.disabled = true;
     button.dataset.state = "loading";
+    button.setAttribute("aria-busy", "true");
     button.textContent = "Copying…";
     try {
       await writeClipboard(source.textContent.trim());
       button.dataset.state = "success";
       button.textContent = "Copied";
-      copyStatus.textContent = `${button.dataset.label} copied to clipboard.`;
+      announceCopy(`${button.dataset.label} copied to clipboard.`);
     } catch {
       button.dataset.state = "error";
       button.textContent = "Copy failed";
-      copyStatus.textContent = "Clipboard access failed. Select and copy the command manually.";
+      announceCopy("Clipboard access failed. Select and copy the visible command manually.");
     } finally {
       button.disabled = false;
+      button.removeAttribute("aria-busy");
       button.dataset.restoreTimer = String(window.setTimeout(() => restoreCopyButton(button), 2500));
     }
-  });
-  button.addEventListener("pointerleave", () => {
-    if (button.dataset.state === "success") restoreCopyButton(button);
   });
 });
 
@@ -176,7 +206,7 @@ const videoToggle = document.querySelector("#video-toggle");
 
 function updateVideoControl() {
   const playing = Boolean(demoVideo && !demoVideo.paused);
-  videoToggle.textContent = playing ? "Pause demo" : "Play demo";
+  videoToggle.textContent = playing ? "Pause demo" : "Play 6s demo";
   videoToggle.setAttribute("aria-pressed", String(playing));
   delete videoToggle.dataset.state;
 }
@@ -190,6 +220,7 @@ videoToggle?.addEventListener("click", async () => {
     } catch {
       videoToggle.dataset.state = "error";
       videoToggle.textContent = "Playback failed";
+      videoToggle.setAttribute("aria-pressed", "false");
     }
   } else {
     demoVideo.pause();

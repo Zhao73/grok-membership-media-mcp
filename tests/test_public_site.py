@@ -47,7 +47,8 @@ def test_hallmark_contract_and_token_discipline() -> None:
     css = (SITE / "styles.css").read_text(encoding="utf-8")
     first_line = css.splitlines()[0]
     assert first_line.startswith("/* Hallmark · macrostructure: Narrative Workflow")
-    assert "pre-emit critique: P5 H5 E5 S5 R5 V5" in css
+    assert "genre: modern-minimal" in first_line
+    assert "pre-emit critique: P5 H5 E5 S5 R5 V4" in css
     assert "transition-all" not in css
     assert "100vw" not in css
     assert "overflow-x: hidden" not in css
@@ -60,6 +61,10 @@ def test_hallmark_contract_and_token_discipline() -> None:
 
 def test_hero_video_is_real_and_accessible() -> None:
     html = (SITE / "index.html").read_text(encoding="utf-8")
+    assert "Website video." in html
+    assert "Just ask." in html
+    assert 'href="#install">Install locally</a>' in html
+    assert 'href="media/demo-evidence.json">View evidence</a>' in html
     assert '<source src="media/demo.mp4" type="video/mp4">' in html
     assert "muted" in html
     assert "loop" in html
@@ -68,6 +73,10 @@ def test_hero_video_is_real_and_accessible() -> None:
     assert 'fetchpriority="high"' in html
     assert 'kind="captions"' in html
     assert "autoplay" not in html
+    assert "MemberMedia" not in html
+    assert "—" not in html
+    assert "–" not in html
+    assert not re.search(r"\bno API\b", html, flags=re.IGNORECASE)
     assert (SITE / "media" / "demo.mp4").stat().st_size < 2_000_000
 
 
@@ -87,11 +96,34 @@ def test_command_palette_and_mobile_contract_are_present() -> None:
     assert '<dialog class="command-menu"' in html
     assert 'role="combobox"' in html
     assert 'role="listbox"' in html
+    assert 'aria-expanded="false"' in html
+    assert 'id="command-tools"' in html
+    assert "aria-activedescendant" in script
+    assert 'setAttribute("aria-expanded", "true")' in script
+    assert 'setAttribute("aria-expanded", "false")' in script
     assert "showModal()" in script
     assert 'event.key === "ArrowDown"' in script
-    assert 'event.key === "Escape"' not in script  # native dialog owns Escape
+    assert 'event.key === "Escape"' in script  # search inputs can otherwise consume the first Escape
     assert "overflow-x: clip" in css
     assert "@media (min-width: 40rem)" in css
     assert "@media (min-width: 48rem)" in css
     assert "@media (min-width: 60rem)" in css
     assert "@media (prefers-reduced-motion: reduce)" in css
+    assert "From a plain-language request to verified files." in html
+    assert "44 automated tests" in html
+    for tool_name in (
+        "media_doctor",
+        "start_website_video",
+        "get_media_job",
+        "list_media_jobs",
+        "cancel_media_job",
+    ):
+        assert tool_name in html
+    for copy_target in (
+        "setup-command",
+        "codex-command",
+        "claude-command",
+        "claude-desktop-command",
+    ):
+        assert f'data-copy-target="{copy_target}"' in html
+    assert "claude_desktop_config.json" in html

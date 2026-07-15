@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta
       name="description"
-      content="A local MCP for Claude and Codex that turns logged-in ChatGPT and Grok memberships into verified website video without developer API keys."
+      content="A local MCP for Claude and Codex that creates verified website video through a logged-in Grok membership, without xAI or OpenAI developer API keys."
     >
-    <title>Grok Membership Media MCP · Website video from paid memberships</title>
+    <title>Grok Membership Media MCP · Website video through paid membership</title>
     <link rel="canonical" href="https://zhao73.github.io/grok-membership-media-mcp/">
     <link
       rel="preload"
@@ -24,7 +24,7 @@
     <meta property="og:title" content="Grok Membership Media MCP">
     <meta
       property="og:description"
-      content="Paid membership in. Verified website video out. No developer API keys."
+      content="Ask Claude or Codex for website video. The local MCP uses your Grok membership and returns verified files without developer API keys."
     >
     <meta property="og:url" content="https://zhao73.github.io/grok-membership-media-mcp/">
     <meta
@@ -37,7 +37,7 @@
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
         "name": "Grok Membership Media MCP",
-        "description": "A local MCP that routes logged-in ChatGPT and Grok memberships into verified website media without developer API keys.",
+        "description": "A local MCP that creates verified website video bundles through logged-in membership clients without developer API keys.",
         "codeRepository": "https://github.com/Zhao73/grok-membership-media-mcp",
         "license": "https://opensource.org/license/mit",
         "programmingLanguage": "Python",
@@ -53,7 +53,7 @@
       <div class="site-nav__inner">
         <a class="wordmark" href="#top" aria-label="Membership Media MCP home">
           <span class="wordmark__signal" aria-hidden="true"></span>
-          <span>MemberMedia</span>
+          <span>Grok Membership MCP</span>
         </a>
 
         <button
@@ -62,6 +62,7 @@
           type="button"
           aria-haspopup="dialog"
           aria-controls="command-menu"
+          aria-expanded="false"
         >
           <span class="search-pill__icon" aria-hidden="true">/</span>
           <span class="search-pill__label">Jump to…</span>
@@ -69,10 +70,7 @@
           <span class="visually-hidden">Open page command menu</span>
         </button>
 
-        <a
-          class="nav-source"
-          href="https://github.com/Zhao73/grok-membership-media-mcp"
-        >Source</a>
+        <a class="nav-source" href="#install">Install</a>
       </div>
     </header>
 
@@ -80,28 +78,22 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero__inner">
           <div class="hero__copy" data-reveal>
-            <p class="context-line">Open source · MIT · macOS verified</p>
-            <h1 id="hero-title">Use the quota you already pay for.</h1>
+            <p class="context-line">Open source. MIT licensed. Verified on macOS.</p>
+            <h1 id="hero-title">
+              <span class="hero__title-line">Website video.</span>
+              <span class="hero__title-line">Just ask.</span>
+            </h1>
             <p class="hero__lede">
-              A local MCP routes logged-in ChatGPT images into Grok video for Claude and Codex.
-              No developer API keys. No API fallback.
+              Claude or Codex can request video with your Grok membership. ChatGPT is optional for
+              first frames. No developer API keys.
             </p>
             <div class="hero__actions">
+              <a class="button button--primary" href="#install">Install locally</a>
               <a
-                class="button button--primary"
+                class="button button--secondary"
                 href="https://github.com/Zhao73/grok-membership-media-mcp"
-              >View source</a>
-              <button
-                class="button button--secondary copy-button"
-                type="button"
-                data-copy-target="hero-install"
-                data-label="Copy install"
-              >Copy install</button>
+              >View on GitHub</a>
             </div>
-            <code id="hero-install" hidden>git clone https://github.com/Zhao73/grok-membership-media-mcp.git</code>
-            <p class="support-line">
-              Works with Codex CLI/Desktop, Claude Code, and Claude Desktop through one local server.
-            </p>
           </div>
 
           <figure class="demo" id="demo" data-reveal>
@@ -129,12 +121,18 @@
               </video>
             </div>
             <figcaption class="demo__caption">
-              <span>
-                <strong>Real membership output</strong>
-                <span>6.04 s · 1280 × 720 · H.264 · silent web MP4</span>
+              <span class="demo__caption-copy">
+                <strong>Verified Grok membership output</strong>
+                <a href="media/demo-evidence.json">View evidence</a>
               </span>
-              <button class="text-control" id="video-toggle" type="button" aria-controls="demo-video">
-                Play demo
+              <button
+                class="text-control"
+                id="video-toggle"
+                type="button"
+                aria-controls="demo-video"
+                aria-pressed="false"
+              >
+                Play 6s demo
               </button>
             </figcaption>
           </figure>
@@ -143,6 +141,10 @@
 
       <section class="proof" id="proof" aria-label="Verified output facts">
         <dl class="proof__list">
+          <div>
+            <dt>Submission</dt>
+            <dd>Confirmed</dd>
+          </div>
           <div>
             <dt>Duration</dt>
             <dd>6.041667 s</dd>
@@ -156,171 +158,300 @@
             <dd>H.264 / yuv420p</dd>
           </div>
           <div>
-            <dt>Contract</dt>
-            <dd>5 MCP tools</dd>
-          </div>
-          <div>
             <dt>Verification</dt>
             <dd>SHA-256 checked</dd>
           </div>
         </dl>
+        <p class="proof__support">
+          One local launcher, verified with Codex CLI, Codex Desktop, Claude Code, and Claude Desktop.
+        </p>
       </section>
 
       <section class="workflow section" id="workflow" aria-labelledby="workflow-title">
         <div class="section__head">
-          <h2 id="workflow-title">One request. Four controlled stages.</h2>
+          <h2 id="workflow-title">From a plain-language request to verified files.</h2>
           <p>
-            The agent gets a persistent job ID immediately. Generation continues in a detached local
-            worker, then returns only after every output passes media and hash checks.
+            The agent starts a persistent local job, returns its ID immediately, and checks back when
+            the verified bundle is ready.
           </p>
         </div>
 
-        <ol class="stages">
-          <li>
-            <span class="stage__number">1.0</span>
-            <h3>Describe</h3>
-            <p>Claude or Codex calls <code>start_website_video</code> with prompt, motion, ratio, and output path.</p>
-          </li>
-          <li>
-            <span class="stage__number">2.0</span>
-            <h3>Frame</h3>
-            <p>Use an existing image, try the logged-in ChatGPT browser, or fall back to Grok only before submission.</p>
-          </li>
-          <li>
-            <span class="stage__number">3.0</span>
-            <h3>Generate</h3>
-            <p>Grok Build submits <code>image_to_video</code> through the paid-member session with API-key auth disabled.</p>
-          </li>
-          <li>
-            <span class="stage__number">4.0</span>
-            <h3>Verify</h3>
-            <p>FFmpeg and ffprobe decode, normalize, hash, and publish the website bundle without overwriting existing files.</p>
-          </li>
-        </ol>
-
-        <div class="route-map" aria-labelledby="routing-title">
-          <div class="route-map__intro">
-            <h3 id="routing-title">Routing is conservative on purpose.</h3>
-            <p>
-              Membership quota is not safely retryable. If a provider may already have received a
-              request, the job stops and records an unknown submission state.
-            </p>
+        <div class="request-example">
+          <div class="request-example__prompt">
+            <p class="request-example__label">You ask</p>
+            <blockquote>
+              “Create a 6-second, 16:9 hero video that matches this site. Use the existing product
+              image, keep the motion subtle, and save the bundle under public/media/hero.”
+            </blockquote>
           </div>
-          <dl class="route-map__paths">
-            <div>
-              <dt>Existing image</dt>
-              <dd>Normalize image → Grok membership video</dd>
-            </div>
-            <div>
-              <dt>No image</dt>
-              <dd>ChatGPT browser frame → Grok membership video</dd>
-            </div>
-            <div>
-              <dt>Safe pre-submit failure</dt>
-              <dd>Grok membership image → Grok membership video</dd>
-            </div>
-            <div>
-              <dt>Unknown submission state</dt>
-              <dd>Stop → never auto-retry quota</dd>
-            </div>
-          </dl>
+          <div class="request-example__execution">
+            <p class="request-example__label">The agent does</p>
+            <ol>
+              <li>
+                <code>start_website_video</code>
+                <span>Returns a persistent job ID immediately.</span>
+              </li>
+              <li>
+                <code>get_media_job</code>
+                <span>Reports status without holding the original turn open.</span>
+              </li>
+              <li>
+                <code>completed</code>
+                <span>Appears only after media, hash, and policy checks pass.</span>
+              </li>
+            </ol>
+          </div>
+          <div class="request-example__files">
+            <p class="request-example__label">You receive</p>
+            <ul aria-label="Completed video bundle files">
+              <li><code>hero.mp4</code></li>
+              <li><code>hero-web.mp4</code></li>
+              <li><code>hero-poster.jpg</code></li>
+              <li><code>hero-first-frame.png</code></li>
+              <li><code>hero-manifest.json</code></li>
+            </ul>
+          </div>
         </div>
+        <p class="video-first-note">
+          The current MCP contract is video-first. Every completed job also publishes its normalized
+          first frame and poster.
+        </p>
       </section>
 
       <section class="install" id="install" aria-labelledby="install-title">
         <div class="install__inner">
           <div class="install__code">
-            <div class="install__head">
-              <span>QUICKSTART · MACOS</span>
-              <button
-                class="copy-button copy-button--dark"
-                type="button"
-                data-copy-target="install-command"
-                data-label="Copy commands"
-              >Copy commands</button>
-            </div>
-            <h2 id="install-title">Install one local server.</h2>
-            <pre><code id="install-command">git clone https://github.com/Zhao73/grok-membership-media-mcp.git
-cd grok-membership-media-mcp
-./scripts/setup.sh
+            <p class="install__eyebrow">Quickstart for macOS</p>
+            <h2 id="install-title">Install once. Use it from either agent.</h2>
+            <p class="install__intro">
+              Requires Python 3.11+, uv, FFmpeg, and a logged-in Grok Build membership. ChatGPT is
+              optional for first frames.
+            </p>
 
-codex mcp add grok-membership-media -- "$PWD/scripts/run-mcp.sh"
-claude mcp add --scope user grok-membership-media -- "$PWD/scripts/run-mcp.sh"</code></pre>
+            <div class="install-step">
+              <div class="install-step__head">
+                <h3>Clone and set up</h3>
+                <button
+                  class="copy-button copy-button--dark"
+                  type="button"
+                  data-copy-target="setup-command"
+                  data-label="Copy setup"
+                >Copy setup</button>
+              </div>
+              <pre><code id="setup-command">git clone https://github.com/Zhao73/grok-membership-media-mcp.git
+cd grok-membership-media-mcp
+./scripts/setup.sh</code></pre>
+            </div>
+
+            <div class="client-command">
+              <div class="client-command__head">
+                <h3>Codex CLI and Codex Desktop</h3>
+                <button
+                  class="copy-button copy-button--dark"
+                  type="button"
+                  data-copy-target="codex-command"
+                  data-label="Copy for Codex"
+                >Copy for Codex</button>
+              </div>
+              <pre><code id="codex-command">codex mcp add grok-membership-media -- "$PWD/scripts/run-mcp.sh"</code></pre>
+            </div>
+
+            <div class="client-command">
+              <div class="client-command__head">
+                <h3>Claude Code</h3>
+                <button
+                  class="copy-button copy-button--dark"
+                  type="button"
+                  data-copy-target="claude-command"
+                  data-label="Copy for Claude Code"
+                >Copy for Claude Code</button>
+              </div>
+              <pre><code id="claude-command">claude mcp add --scope user grok-membership-media -- "$PWD/scripts/run-mcp.sh"</code></pre>
+            </div>
+
+            <details class="desktop-config">
+              <summary>Claude Desktop configuration</summary>
+              <div class="desktop-config__body">
+                <p>
+                  Add the same launcher to
+                  <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>.
+                </p>
+                <div class="client-command__head">
+                  <h3>JSON entry</h3>
+                  <button
+                    class="copy-button copy-button--dark"
+                    type="button"
+                    data-copy-target="claude-desktop-command"
+                    data-label="Copy Claude Desktop config"
+                  >Copy config</button>
+                </div>
+                <pre><code id="claude-desktop-command">{
+  "mcpServers": {
+    "grok-membership-media": {
+      "command": "/absolute/path/to/grok-membership-media-mcp/scripts/run-mcp.sh",
+      "args": []
+    }
+  }
+}</code></pre>
+              </div>
+            </details>
           </div>
 
           <aside class="policy" aria-labelledby="policy-title">
-            <h3 id="policy-title">What “no API” means</h3>
+            <h3 id="policy-title">Membership sessions, not developer APIs.</h3>
             <p>
-              No developer API, no developer API key, and no direct xAI or OpenAI REST adapter.
-              Official membership clients still connect to their own services.
+              This MCP invokes a logged-in Grok membership session and, optionally, a logged-in
+              ChatGPT browser. Provider subprocesses receive no developer API keys, and the project
+              ships no direct xAI or OpenAI REST adapter. Membership clients still connect to their
+              own services.
             </p>
             <div class="policy__lists">
               <div>
                 <h4>Uses</h4>
                 <ul>
-                  <li>Logged-in Grok membership</li>
-                  <li>Logged-in ChatGPT browser</li>
+                  <li>Logged-in Grok membership session</li>
+                  <li>Optional ChatGPT browser first frame</li>
                   <li>Local MCP, SQLite, FFmpeg</li>
                 </ul>
               </div>
               <div>
                 <h4>Refuses</h4>
                 <ul>
-                  <li><code>XAI_API_KEY</code></li>
-                  <li><code>OPENAI_API_KEY</code></li>
-                  <li>Public API fallback</li>
+                  <li><code>XAI_API_KEY</code> and <code>OPENAI_API_KEY</code></li>
+                  <li>Direct xAI/OpenAI REST adapters</li>
+                  <li>Public developer API fallback</li>
                 </ul>
               </div>
             </div>
+            <p class="doctor-callout">
+              Before spending quota, ask: “Run <code>media_doctor</code> and show the membership,
+              FFmpeg, storage, and developer-API policy checks.”
+            </p>
           </aside>
+        </div>
+      </section>
+
+      <section class="contract section" id="tools" aria-labelledby="tools-title">
+        <div class="contract__layout">
+          <div class="section__head">
+            <h2 id="tools-title">Five tools. One persistent job.</h2>
+            <p>
+              Start once, check later, and keep the same job state across Claude, Codex, and
+              MCP-client restarts.
+            </p>
+            <p class="repository-evidence">
+              <a href="https://github.com/Zhao73/grok-membership-media-mcp/tree/main/tests">44 automated tests</a>
+              cover provider policy, job persistence, retry safety, path containment, publication
+              races, artifact verification, and the public site contract.
+            </p>
+          </div>
+
+          <dl class="tool-list">
+            <div>
+              <dt><code>media_doctor</code></dt>
+              <dd>Checks membership auth, FFmpeg, storage, and developer-API policy without generating media.</dd>
+            </div>
+            <div>
+              <dt><code>start_website_video</code></dt>
+              <dd>Starts a detached job and returns a persistent job ID.</dd>
+            </div>
+            <div>
+              <dt><code>get_media_job</code></dt>
+              <dd>Returns job state and verified artifacts.</dd>
+            </div>
+            <div>
+              <dt><code>list_media_jobs</code></dt>
+              <dd>Lists recent jobs without starting generation.</dd>
+            </div>
+            <div>
+              <dt><code>cancel_media_job</code></dt>
+              <dd>Stops the local worker. It does not claim to cancel a request already accepted by a provider.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="route-map" aria-labelledby="routing-title">
+          <div class="route-map__intro">
+            <h3 id="routing-title">First frames take the safest known route.</h3>
+            <p>
+              Fallback is allowed only before submission is known to have happened. An uncertain
+              provider state always stops the job.
+            </p>
+          </div>
+          <dl class="route-map__paths">
+            <div>
+              <dt>Image supplied</dt>
+              <dd>Normalize the image → Grok membership video</dd>
+            </div>
+            <div>
+              <dt>No image</dt>
+              <dd>ChatGPT browser frame → Grok membership video</dd>
+            </div>
+            <div>
+              <dt>Confirmed pre-submit failure</dt>
+              <dd>Grok membership image → Grok membership video</dd>
+            </div>
+            <div>
+              <dt>Submission uncertain</dt>
+              <dd><code>submitted_unknown</code> → stop and never auto-retry paid quota</dd>
+            </div>
+          </dl>
         </div>
       </section>
 
       <section class="security section" id="security" aria-labelledby="security-title">
         <div class="security__layout">
           <div class="section__head security__head">
-            <h2 id="security-title">Quota safety is a state machine.</h2>
+            <h2 id="security-title">Protect quota before, during, and after generation.</h2>
             <p>
-              The hard part is not starting a generation. It is proving when a retry is safe, keeping
-              two agents from spending the same quota, and refusing corrupted output.
+              The worker removes developer-key variables, reserves output names, serializes Grok
+              media work, stops on uncertain submission state, and publishes only verified files.
             </p>
             <a class="text-link" href="https://github.com/Zhao73/grok-membership-media-mcp/blob/main/docs/PLAN.zh-CN.md">
-              Read the Chinese architecture
+              Read the architecture plan (中文)
             </a>
           </div>
 
           <dl class="security__facts">
             <div>
-              <dt>Before launch</dt>
-              <dd>Known API-key variables are removed. ChatGPT is pinned to the web backend.</dd>
+              <dt>Before submission</dt>
+              <dd>Remove API-key variables, reserve the output name, and pin ChatGPT first-frame work to the web backend.</dd>
             </div>
             <div>
               <dt>During generation</dt>
-              <dd>SQLite reserves output names, idempotency reuses jobs, and Grok media work is serialized.</dd>
+              <dd>Reuse idempotent jobs, serialize Grok media work, and persist provider state in SQLite.</dd>
             </div>
             <div>
-              <dt>After generation</dt>
-              <dd>Every file is decoded and hashed. The manifest publishes last and is rechecked on every completed read.</dd>
+              <dt>Before publication</dt>
+              <dd>Decode and hash every artifact, publish the manifest last, and recheck every completed read.</dd>
             </div>
           </dl>
         </div>
 
         <div class="faq" id="faq">
-          <h2>Precise answers, before you install.</h2>
+          <h2>Requirements and limits</h2>
           <details>
-            <summary>Does this bypass membership limits?</summary>
-            <p>No. It spends the normal paid-member quota through the logged-in official clients.</p>
+            <summary>Developer APIs?</summary>
+            <p>No. It uses logged-in membership clients and contains no direct xAI or OpenAI developer API adapter or fallback.</p>
           </details>
           <details>
-            <summary>Is ChatGPT required for video?</summary>
-            <p>No. Grok can generate the first frame when ChatGPT fails safely before submission, or you can supply an existing image.</p>
+            <summary>Membership limits?</summary>
+            <p>They still apply. Grok image and video generation spends the normal paid membership quota. The project does not expose or bypass remaining-quota limits.</p>
           </details>
           <details>
-            <summary>What happens when submission status is unknown?</summary>
-            <p>The job stops as <code>submitted_unknown</code>. It never retries automatically.</p>
+            <summary>Is ChatGPT required?</summary>
+            <p>No. Supply an existing first frame, or let Grok create one after a confirmed safe pre-submit ChatGPT failure.</p>
           </details>
           <details>
-            <summary>Which systems are verified?</summary>
+            <summary>Which files are published?</summary>
+            <p>The original MP4, a muted fast-start web MP4, a poster JPEG, the normalized first-frame PNG, and a verified manifest. Current Grok video options are 6 or 10 seconds at 480p or 720p.</p>
+          </details>
+          <details>
+            <summary>Why run FFmpeg?</summary>
+            <p>To decode-test the output, create a web-compatible H.264/yuv420p copy, extract the poster and first frame, and verify hashes before completion.</p>
+          </details>
+          <details>
+            <summary>Verified systems?</summary>
             <p>macOS is verified with Codex CLI/Desktop, Claude Code, and Claude Desktop. Linux and Windows are not claimed yet.</p>
           </details>
         </div>
@@ -328,15 +459,15 @@ claude mcp add --scope user grok-membership-media -- "$PWD/scripts/run-mcp.sh"</
     </main>
 
     <footer class="footer">
-      <p class="footer__statement">Keep developer keys out of the media pipeline.</p>
+      <p class="footer__statement">Ask for website video. Keep developer keys out.</p>
       <div class="footer__meta">
         <span class="wordmark wordmark--footer">
           <span class="wordmark__signal" aria-hidden="true"></span>
-          MemberMedia MCP
+          Grok Membership Media MCP
         </span>
         <nav aria-label="Footer">
-          <a href="https://github.com/Zhao73/grok-membership-media-mcp">GitHub</a>
-          <a href="https://github.com/Zhao73/grok-membership-media-mcp/blob/main/LICENSE">MIT</a>
+          <a href="https://github.com/Zhao73/grok-membership-media-mcp">View on GitHub</a>
+          <a href="https://github.com/Zhao73/grok-membership-media-mcp/blob/main/LICENSE">MIT license</a>
           <a href="https://github.com/Zhao73/grok-membership-media-mcp/blob/main/SECURITY.md">Security</a>
         </nav>
         <span>© <span id="current-year">2026</span> Zhao73</span>
@@ -365,40 +496,45 @@ claude mcp add --scope user grok-membership-media -- "$PWD/scripts/run-mcp.sh"</
         </div>
 
         <div class="command-menu__results" id="command-results" role="listbox">
-          <section class="command-group" data-command-group>
-            <h2>On this page</h2>
-            <a role="option" tabindex="-1" data-command data-search="demo video proof output" href="#demo">
+          <section class="command-group" role="group" aria-labelledby="command-page-title" data-command-group>
+            <h2 id="command-page-title">On this page</h2>
+            <a id="command-demo" role="option" tabindex="-1" data-command data-search="demo video proof output" href="#demo">
               <span>Watch the real demo</span><small>Proof</small>
             </a>
-            <a role="option" tabindex="-1" data-command data-search="workflow routing stages" href="#workflow">
-              <span>Follow the workflow</span><small>Routing</small>
+            <a id="command-workflow" role="option" tabindex="-1" data-command data-search="request prompt files workflow" href="#workflow">
+              <span>See the request and files</span><small>Workflow</small>
             </a>
-            <a role="option" tabindex="-1" data-command data-search="install quickstart codex claude" href="#install">
-              <span>Copy the install</span><small>Setup</small>
+            <a id="command-install" role="option" tabindex="-1" data-command data-search="install quickstart codex claude desktop" href="#install">
+              <span>Install locally</span><small>Setup</small>
             </a>
-            <a role="option" tabindex="-1" data-command data-search="security quota retry state" href="#security">
-              <span>Inspect quota safety</span><small>Policy</small>
+            <a id="command-tools" role="option" tabindex="-1" data-command data-search="tools contract mcp persistent job" href="#tools">
+              <span>Inspect the five tools</span><small>Contract</small>
+            </a>
+            <a id="command-security" role="option" tabindex="-1" data-command data-search="security quota retry state" href="#security">
+              <span>Read quota safety</span><small>Policy</small>
             </a>
           </section>
-          <section class="command-group" data-command-group>
-            <h2>Repository</h2>
+          <section class="command-group" role="group" aria-labelledby="command-repository-title" data-command-group>
+            <h2 id="command-repository-title">Repository</h2>
             <a
+              id="command-github"
               role="option"
               tabindex="-1"
               data-command
               data-search="github source repository code"
               href="https://github.com/Zhao73/grok-membership-media-mcp"
             >
-              <span>Open the source</span><small>GitHub</small>
+              <span>View on GitHub</span><small>Source</small>
             </a>
             <a
+              id="command-docs"
               role="option"
               tabindex="-1"
               data-command
               data-search="readme documentation tools"
               href="https://github.com/Zhao73/grok-membership-media-mcp#readme"
             >
-              <span>Read the documentation</span><small>README</small>
+              <span>Read docs</span><small>README</small>
             </a>
           </section>
           <p class="command-menu__empty" id="command-empty" hidden>No matching command.</p>
