@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zhao73.github.io/grok-membership-media-mcp/sitemap.xml

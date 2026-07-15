@@ -1,0 +1,21 @@
+{
+  "date": "2026-07-15",
+  "scope": "page",
+  "signals": {
+    "design_system": null,
+    "font_stack": null,
+    "palette": null,
+    "motion_library": null,
+    "spacing_scale": null,
+    "framework": "vanilla HTML, CSS, and JavaScript"
+  },
+  "preserve": [],
+  "introduce": [
+    "Hallmark Narrative Workflow macrostructure",
+    "Cobalt tokens",
+    "N13 command palette",
+    "E1 real demo video",
+    "responsive and interaction gates"
+  ],
+  "motion_stance": "motion-cut"
+}

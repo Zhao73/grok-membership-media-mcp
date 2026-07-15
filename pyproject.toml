@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "grok-membership-media-mcp"
+version = "0.1.0"
+description = "Local MCP for ChatGPT membership image generation and Grok membership video generation, with no developer API keys."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "mcp==1.9.4",
+  "pydantic>=2.11,<3",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+grok-membership-media-mcp = "grok_membership_media_mcp.server:main"
+grok-membership-media-worker = "grok_membership_media_mcp.worker:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/grok_membership_media_mcp"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

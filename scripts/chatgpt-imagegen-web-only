@@ -1,0 +1,39 @@
+#!/bin/zsh
+set -eu
+
+ROOT="${0:A:h:h}"
+UPSTREAM="$ROOT/vendor/chatgpt-imagegen/chatgpt-imagegen"
+EXPECTED_SHA256="75c749b7962f86c2811925868af8f905cd767b4e0862dbe364db46b3a9675030"
+ACTUAL_SHA256="$(/usr/bin/shasum -a 256 "$UPSTREAM" | /usr/bin/awk '{print $1}')"
+
+if [[ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]]; then
+  print -u2 "membership-only wrapper: vendored chatgpt-imagegen checksum mismatch"
+  exit 65
+fi
+
+if [[ "${1:-}" == "doctor" ]]; then
+  exec "$UPSTREAM" "$@"
+fi
+
+backend=""
+args=("$@")
+for ((index = 1; index <= ${#args}; index++)); do
+  argument="${args[$index]}"
+  [[ "$argument" == "--" ]] && break
+  if [[ "$argument" == "--backend" ]]; then
+    (( index < ${#args} )) || {
+      print -u2 "membership-only wrapper: --backend requires a value"
+      exit 64
+    }
+    backend="${args[$((index + 1))]}"
+  elif [[ "$argument" == --backend=* ]]; then
+    backend="${argument#--backend=}"
+  fi
+done
+
+if [[ "$backend" != "web" ]]; then
+  print -u2 "membership-only wrapper: exactly --backend web is required"
+  exit 64
+fi
+
+exec "$UPSTREAM" "$@"

@@ -1,0 +1,21 @@
+{
+  "published_at": "2026-07-15",
+  "provider": "grok.com_membership",
+  "submission": "confirmed",
+  "developer_api_used": false,
+  "api_key_auth_disabled": true,
+  "video": {
+    "filename": "demo.mp4",
+    "duration_seconds": 6.041667,
+    "width": 1280,
+    "height": 720,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_streams": 0,
+    "sha256": "fc783431c30052f43062e9fbd64a104a27abfc7dd0d0cf0639e0be7c7c6650df"
+  },
+  "poster": {
+    "filename": "demo-poster.jpg",
+    "sha256": "4d8ed47c002f559d6a176261f23f6cc43bf6e7a134b891de61e2c5c4122a2a60"
+  }
+}
