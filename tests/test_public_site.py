@@ -127,3 +127,13 @@ def test_command_palette_and_mobile_contract_are_present() -> None:
     ):
         assert f'data-copy-target="{copy_target}"' in html
     assert "claude_desktop_config.json" in html
+    assert "$HOME/.local/bin/grok-membership-media-mcp" in html
+    assert "$PWD/scripts/run-mcp.sh" not in html
+
+    setup = (ROOT / "scripts" / "setup.sh").read_text(encoding="utf-8")
+    assert 'LAUNCHER_DIR="${MEMBERSHIP_MEDIA_LAUNCHER_DIR:-$HOME/.local/bin}"' in setup
+    assert 'RUNTIME="${MEMBERSHIP_MEDIA_RUNTIME_DIR:-$HOME/.local/share/grok-membership-media-mcp/runtime}"' in setup
+    assert 'Refusing unsafe runtime directory' in setup
+    assert '"$UV" sync --frozen --no-dev --python "$PYTHON"' in setup
+    assert 'install -m 755 "$ROOT/scripts/launcher.sh" "$LAUNCHER"' in setup
+    assert 'ln -sfn "$ROOT/scripts/run-mcp.sh" "$LAUNCHER"' not in setup

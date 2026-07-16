@@ -224,21 +224,28 @@ GROK_DISABLE_API_KEY_AUTH=1
 统一启动器：
 
 ```text
-<仓库绝对路径>/scripts/run-mcp.sh
+$HOME/.local/bin/grok-membership-media-mcp
 ```
+
+`./scripts/setup.sh` 会把完整运行时重新安装到
+`$HOME/.local/share/grok-membership-media-mcp/runtime`，并创建这个只含 ASCII
+字符的真实 wrapper 文件（不是指回仓库的软链接）。仓库本身可以放在
+`Documents`、含空格或非 ASCII 字符的目录中；客户端不要直接引用仓库路径。
+macOS 可能拒绝桌面 MCP 子进程读取 `Documents` 中的脚本，而软链接仍会按真实
+目标接受系统策略检查。
 
 Codex CLI 与 Codex Desktop 共用 `~/.codex/config.toml`：
 
 ```bash
 codex mcp add grok-membership-media -- \
-  "$PWD/scripts/run-mcp.sh"
+  "$HOME/.local/bin/grok-membership-media-mcp"
 ```
 
 Claude Code：
 
 ```bash
 claude mcp add --scope user grok-membership-media -- \
-  "$PWD/scripts/run-mcp.sh"
+  "$HOME/.local/bin/grok-membership-media-mcp"
 ```
 
 Claude Desktop 的 `claude_desktop_config.json`：
@@ -247,7 +254,7 @@ Claude Desktop 的 `claude_desktop_config.json`：
 {
   "mcpServers": {
     "grok-membership-media": {
-      "command": "/absolute/path/to/grok-membership-media-mcp/scripts/run-mcp.sh",
+      "command": "/absolute/path/to/home/.local/bin/grok-membership-media-mcp",
       "args": []
     }
   }

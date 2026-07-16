@@ -253,7 +253,7 @@ cd grok-membership-media-mcp
                   data-label="Copy for Codex"
                 >Copy for Codex</button>
               </div>
-              <pre><code id="codex-command">codex mcp add grok-membership-media -- "$PWD/scripts/run-mcp.sh"</code></pre>
+              <pre><code id="codex-command">codex mcp add grok-membership-media -- "$HOME/.local/bin/grok-membership-media-mcp"</code></pre>
             </div>
 
             <div class="client-command">
@@ -266,7 +266,7 @@ cd grok-membership-media-mcp
                   data-label="Copy for Claude Code"
                 >Copy for Claude Code</button>
               </div>
-              <pre><code id="claude-command">claude mcp add --scope user grok-membership-media -- "$PWD/scripts/run-mcp.sh"</code></pre>
+              <pre><code id="claude-command">claude mcp add --scope user grok-membership-media -- "$HOME/.local/bin/grok-membership-media-mcp"</code></pre>
             </div>
 
             <details class="desktop-config">
@@ -288,7 +288,7 @@ cd grok-membership-media-mcp
                 <pre><code id="claude-desktop-command">{
   "mcpServers": {
     "grok-membership-media": {
-      "command": "/absolute/path/to/grok-membership-media-mcp/scripts/run-mcp.sh",
+      "command": "/absolute/path/to/home/.local/bin/grok-membership-media-mcp",
       "args": []
     }
   }

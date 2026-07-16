@@ -71,18 +71,26 @@ cd grok-membership-media-mcp
 ./scripts/setup.sh
 ```
 
+Setup installs an isolated runtime at
+`$HOME/.local/share/grok-membership-media-mcp/runtime` and an ASCII-safe,
+non-symlink launcher at `$HOME/.local/bin/grok-membership-media-mcp`. Use this
+stable launcher even when the repository lives under `Documents` or in a path
+with spaces or non-ASCII names. macOS can deny desktop MCP child processes
+access to the checkout, and a symlink back to it does not bypass that policy.
+
 Install the same launcher for Codex/Codex Desktop and Claude Code:
 
 ```bash
 codex mcp add grok-membership-media -- \
-  "$PWD/scripts/run-mcp.sh"
+  "$HOME/.local/bin/grok-membership-media-mcp"
 
 claude mcp add --scope user grok-membership-media -- \
-  "$PWD/scripts/run-mcp.sh"
+  "$HOME/.local/bin/grok-membership-media-mcp"
 ```
 
 Codex Desktop uses the Codex MCP configuration. Claude Desktop uses the same
-command in `~/Library/Application Support/Claude/claude_desktop_config.json`.
+absolute launcher path in
+`~/Library/Application Support/Claude/claude_desktop_config.json`.
 
 The routing skill can be symlinked into both clients:
 
